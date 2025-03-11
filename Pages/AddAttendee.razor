@@ -1,0 +1,42 @@
+@page "/add-attendee"
+@using BlazorEventApp.Models
+
+<h3>Add Attendee</h3>
+
+<div class="attendee-form">
+    <label for="attendeeName">Name:</label>
+    <input id="attendeeName" @bind="attendeeName" placeholder="Enter Name" />
+    
+    <label for="attendeeContact">Contact:</label>
+    <input id="attendeeContact" @bind="attendeeContact" placeholder="Enter Contact" />
+    
+    <div class="form-buttons">
+        <button class="save-btn" @onclick="SaveAttendee">Save</button>
+        <button class="cancel-btn" @onclick="Cancel">Cancel</button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback<AttendeeModel> OnAttendeeAdded { get; set; }
+
+    private string attendeeName = "";
+    private string attendeeContact = "";
+
+    private async Task SaveAttendee()
+    {
+        if (!string.IsNullOrWhiteSpace(attendeeName) && !string.IsNullOrWhiteSpace(attendeeContact))
+        {
+            var newAttendee = new AttendeeModel { Name = attendeeName, Contact = attendeeContact };
+            await OnAttendeeAdded.InvokeAsync(newAttendee);
+
+            // Clear input fields after saving
+            attendeeName = "";
+            attendeeContact = "";
+        }
+    }
+
+    private void Cancel()
+    {
+        Console.WriteLine("Attendee addition canceled.");
+    }
+}

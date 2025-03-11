@@ -1,0 +1,48 @@
+﻿@page "/"
+@inject IJSRuntime JS
+
+<div class="container">
+    <h1 class="welcome-text">@WelcomeMessage</h1>
+</div>
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
+    .welcome-text {
+        font-size: 28px;
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+</style>
+
+@code {
+    private string WelcomeMessage { get; set; } = "Welcome to the Event Management System";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var storedUserString = await JS.InvokeAsync<string>("sessionStorage.getItem", "user");
+        if (!string.IsNullOrWhiteSpace(storedUserString))
+        {
+            try
+            {
+                var user = System.Text.Json.JsonSerializer.Deserialize<User>(storedUserString);
+                if (user != null && !string.IsNullOrWhiteSpace(user.Email))
+                {
+                    WelcomeMessage = $"Welcome back, {user.Email}!";
+                }
+            }
+            catch {}
+        }
+    }
+
+    private class User
+    {
+        public string Email { get; set; } = "";
+    }
+}

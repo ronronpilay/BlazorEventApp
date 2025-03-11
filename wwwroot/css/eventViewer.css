@@ -1,0 +1,190 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #eef1f7;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.event-viewer {
+  width: 80%;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+h2 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 26px;
+}
+
+/* Add Event Button */
+.add-btn {
+  display: block;
+  width: fit-content;
+  margin: 15px auto;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-btn:hover {
+  background: #0056b3;
+}
+
+/* Event List */
+.event-list {
+  margin-top: 20px;
+}
+
+/* Event Card */
+.event-container {
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.event-container:hover {
+  transform: scale(1.02);
+}
+
+.event-card h3 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.event-card p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Action Buttons */
+.event-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.update-btn {
+  background: #f39c12;
+  color: white;
+}
+
+.add-event-btn {
+  background: #3498db;
+  color: white;
+}
+
+.add-attendee-btn {
+  background: #1abc9c;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+.update-btn:hover {
+  background: #d68910;
+}
+
+.add-event-btn:hover {
+  background: #2e86c1;
+}
+
+.add-attendee-btn:hover {
+  background: #16a085;
+}
+
+/* No Events Message */
+.no-events {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 18px;
+}
+
+/* Edit Form Styles */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.edit-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.location-and-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.save-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.save-btn:hover {
+  background: #218838;
+}
+
+.cancel-btn:hover {
+  background: #c82333;
+}

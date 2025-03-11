@@ -1,0 +1,93 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\obj\\Debug\\net8.0\\compressed\\ki8797let4.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorEventApp.styles.css",
+      "PackagePath": "staticwebassets\\BlazorEventApp.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\createEvent.css",
+      "PackagePath": "staticwebassets\\css\\createEvent.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\eventCard.css",
+      "PackagePath": "staticwebassets\\css\\eventCard.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\eventViewer.css",
+      "PackagePath": "staticwebassets\\css\\eventViewer.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\index.css",
+      "PackagePath": "staticwebassets\\css\\index.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\css\\register.css",
+      "PackagePath": "staticwebassets\\css\\register.css"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\localStorage.js",
+      "PackagePath": "staticwebassets\\localStorage.js"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\sample-data\\weather.json",
+      "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "C:\\Users\\Adam\\BlazorEventApp\\wwwroot\\script.js",
+      "PackagePath": "staticwebassets\\script.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.BlazorEventApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.BlazorEventApp.props",
+      "PackagePath": "build\\BlazorEventApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.BlazorEventApp.props",
+      "PackagePath": "buildMultiTargeting\\BlazorEventApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.BlazorEventApp.props",
+      "PackagePath": "buildTransitive\\BlazorEventApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

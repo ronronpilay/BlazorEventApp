@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlazorEventApp</title>
+    <base href="/" />
+
+    <!-- ✅ Load essential CSS first -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <!-- ✅ Updated FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- ✅ Preload Blazor styles for faster rendering -->
+    <link rel="preload" href="BlazorEventApp.styles.css" as="style" />
+    <link href="BlazorEventApp.styles.css" rel="stylesheet" />
+
+    <!-- ✅ Ensure all CSS loads correctly -->
+    <link rel="stylesheet" href="css/createEvent.css" />
+    <link rel="stylesheet" href="css/eventViewer.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/register.css" />
+    <link rel="stylesheet" href="css/eventCard.css" />
+    <script src="scripts.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- ✅ Improved Loading Animation -->
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <p>Loading, please wait...</p>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui" style="display: none;">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <!-- ✅ Load localStorage.js BEFORE Blazor -->
+    <script src="localStorage.js"></script>
+    
+    <!-- ✅ Faster Blazor Startup -->
+    <script src="_framework/blazor.webassembly.js" autostart="true"></script>
+
+    <!-- ✅ Show error UI only if an error occurs -->
+    <script>
+        window.addEventListener("error", function () {
+            document.getElementById("blazor-error-ui").style.display = "block";
+        });
+    </script>
+
+    <!-- ✅ Loading Spinner Styles -->
+    <style>
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>

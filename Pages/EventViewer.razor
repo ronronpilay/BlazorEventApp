@@ -1,0 +1,172 @@
+@page "/event-viewer"
+@using Microsoft.JSInterop
+@using BlazorEventApp.Models
+@using BlazorEventApp.Pages
+@inject IJSRuntime JS
+
+<div class="event-viewer">
+    <h2>Your Events</h2>
+
+    @if (events.Count == 0)
+    {
+        <div class="no-events">
+            <p>No events found. Please create an event.</p>
+        </div>
+    }
+    else
+    {
+        <div class="event-list">
+            @foreach (var ev in events.Select((value, index) => new { value, index }))
+            {
+                <div class="event-container">
+                    <div class="event-card">
+                        <div class="event-actions">
+                            <button @onclick="() => DeleteEvent(ev.index)" class="delete-btn">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <button @onclick="() => EditEvent(ev.index)" class="update-btn">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button @onclick="() => ShowAddAttendeeModal(ev.index)" class="add-attendee-btn">
+                                <i class="fa fa-user-plus"></i>
+                            </button>
+                        </div>
+
+                        @if (editingIndex == ev.index)
+                        {
+                            <EventCard Event="selectedEvent" EventChanged="OnEventUpdated" />
+                        }
+                        else
+                        {
+                            <h3><strong>Event:</strong> @ev.value.Title</h3>
+                            <p><strong>Date:</strong> @ev.value.Date.ToShortDateString()</p>
+                            <p><strong>Location:</strong> @ev.value.Location</p>
+
+                            @if (ev.value.Attendees != null && ev.value.Attendees.Any())
+                            {
+                                <h4>Attendees:</h4>
+                                <ul>
+                                    @foreach (var attendee in ev.value.Attendees)
+                                    {
+                                        <li>@attendee.Name - @attendee.Contact</li>
+                                    }
+                                </ul>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<h3>Live Event Data:</h3>
+@if (selectedEvent != null)
+{
+    <h3><strong>Event:</strong> @selectedEvent.Title</h3>
+    <p><strong>Date:</strong> @selectedEvent.Date.ToShortDateString()</p>
+    <p><strong>Location:</strong> @selectedEvent.Location</p>
+}
+
+@if (showAddAttendeeModal)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <AddAttendee OnAttendeeAdded="OnAttendeeAdded" />
+            <button class="cancel-btn" @onclick="CloseAddAttendeeModal">Close</button>
+        </div>
+    </div>
+}
+
+@code {
+    private List<EventModel> events { get; set; } = new();
+    private int? editingIndex = null;
+    private EventModel? selectedEvent = null;
+    private bool showAddAttendeeModal = false;
+    private int selectedEventIndex;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var storedEvents = await JS.InvokeAsync<string>("localStorageHelper.getItem", "events");
+            if (!string.IsNullOrEmpty(storedEvents))
+            {
+                events = System.Text.Json.JsonSerializer.Deserialize<List<EventModel>>(storedEvents) ?? new List<EventModel>();
+                
+                foreach (var ev in events)
+                {
+                    ev.Attendees ??= new List<AttendeeModel>();
+                }
+            }
+            else
+            {
+                events = new List<EventModel>();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading events: {ex.Message}");
+            events = new List<EventModel>();
+        }
+
+        StateHasChanged();
+    }
+
+    private void EditEvent(int index)
+    {
+        editingIndex = index;
+        selectedEvent = events[index];
+    }
+
+    private void CancelEdit()
+    {
+        editingIndex = null;
+        selectedEvent = null;
+    }
+
+    private void ShowAddAttendeeModal(int index)
+    {
+        selectedEventIndex = index;
+        showAddAttendeeModal = true;
+    }
+
+    private void CloseAddAttendeeModal()
+    {
+        showAddAttendeeModal = false;
+    }
+
+    private async Task DeleteEvent(int index)
+    {
+        if (index >= 0 && index < events.Count)
+        {
+            events.RemoveAt(index);
+            await JS.InvokeVoidAsync("localStorageHelper.setItem", "events", System.Text.Json.JsonSerializer.Serialize(events));
+        }
+        StateHasChanged();
+    }
+
+    private async Task OnAttendeeAdded(AttendeeModel newAttendee)
+    {
+        if (selectedEventIndex >= 0 && selectedEventIndex < events.Count)
+        {
+            events[selectedEventIndex].Attendees.Add(newAttendee);
+            await JS.InvokeVoidAsync("localStorageHelper.setItem", "events", System.Text.Json.JsonSerializer.Serialize(events));
+        }
+        showAddAttendeeModal = false;
+        StateHasChanged();
+    }
+
+    private async Task OnEventUpdated(EventModel updatedEvent)
+    {
+        if (editingIndex.HasValue && editingIndex.Value >= 0 && editingIndex.Value < events.Count)
+        {
+            events[editingIndex.Value] = updatedEvent;
+            await JS.InvokeVoidAsync("localStorageHelper.setItem", "events", System.Text.Json.JsonSerializer.Serialize(events));
+        }
+
+        selectedEvent = updatedEvent;
+        editingIndex = null;
+        StateHasChanged();
+    }
+}

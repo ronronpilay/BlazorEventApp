@@ -1,0 +1,24 @@
+@using BlazorEventApp.Models
+
+<div class="event-card">
+    <label for="title">Title:</label>
+    <input id="title" @bind="Event.Title" />
+
+    <label for="date">Date:</label>
+    <input id="date" type="date" @bind="Event.Date" />
+
+    <label for="location">Location:</label>
+    <input id="location" @bind="Event.Location" />
+
+    <button class="save-btn" @onclick="SaveChanges">Save</button>
+</div>
+
+@code {
+    [Parameter] public EventModel Event { get; set; } = new(); // ✅ Added Event parameter
+    [Parameter] public EventCallback<EventModel> EventChanged { get; set; }
+
+    private async Task SaveChanges()
+    {
+        await EventChanged.InvokeAsync(Event);
+    }
+}

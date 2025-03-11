@@ -1,0 +1,90 @@
+@page "/create-event"
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@using BlazorEventApp.Models
+
+<div class="create-event">
+    <h2>Create Event</h2>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <p class="error">@ErrorMessage</p>
+    }
+
+    @if (!string.IsNullOrEmpty(SuccessMessage))
+    {
+        <p class="success">@SuccessMessage</p>
+    }
+
+    <form @onsubmit="HandleSubmit">
+        <label>Event Name</label>
+        <input type="text" @bind="EventName" required />
+
+        <label>Event Date</label>
+        <input type="date" @bind="EventDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+
+        <label>Event Location</label>
+        <input type="text" @bind="EventLocation" required />
+
+        <button type="submit">Create Event</button>
+    </form>
+</div>
+
+@code {
+    private string EventName { get; set; } = "";
+    private DateTime EventDate { get; set; } = DateTime.Today;
+    private string EventLocation { get; set; } = "";
+    private string ErrorMessage { get; set; } = "";
+    private string SuccessMessage { get; set; } = "";
+
+    private async Task HandleSubmit()
+    {
+        if (string.IsNullOrEmpty(EventName) || string.IsNullOrEmpty(EventLocation))
+        {
+            ErrorMessage = "All fields are required!";
+            SuccessMessage = "";
+            return;
+        }
+
+        if (EventDate < DateTime.Today)
+        {
+            ErrorMessage = "Event date cannot be in the past!";
+            SuccessMessage = "";
+            return;
+        }
+
+        try
+        {
+            var storedEvents = await JS.InvokeAsync<string>("localStorageHelper.getItem", "events");
+
+            List<EventModel> eventList = string.IsNullOrEmpty(storedEvents)
+                ? new List<EventModel>()
+                : System.Text.Json.JsonSerializer.Deserialize<List<EventModel>>(storedEvents) ?? new List<EventModel>();
+
+            eventList.Add(new EventModel
+            {
+                Title = EventName,  
+                Date = EventDate,
+                Location = EventLocation,
+                Description = "", 
+                Attendees = new List<AttendeeModel>() 
+            });
+
+            await JS.InvokeVoidAsync("localStorageHelper.setItem", "events", System.Text.Json.JsonSerializer.Serialize(eventList));
+
+            SuccessMessage = "Event created successfully!";
+            ErrorMessage = "";
+
+            // Clear form after saving
+            EventName = "";
+            EventDate = DateTime.Today;
+            EventLocation = "";
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error saving event: {ex.Message}";
+            SuccessMessage = "";
+            Console.WriteLine($"Error: {ex}");
+        }
+    }
+}

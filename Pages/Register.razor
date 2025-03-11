@@ -1,0 +1,97 @@
+﻿@page "/register"
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using System.Security.Cryptography
+@using System.Text
+@using System.Text.RegularExpressions
+
+<div class="register">  
+    <h2>Register</h2>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <p class="error-message">@ErrorMessage</p>
+    }
+
+    <form @onsubmit="HandleSubmit">
+        <label for="email">Email</label>
+        <input id="email" type="email" @bind="Email" required />
+
+        <label for="password">Password</label>
+        <input id="password" type="password" @bind="Password" required minlength="6" />
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+@code {
+    private string Email { get; set; } = "";
+    private string Password { get; set; } = "";
+    private string ErrorMessage { get; set; } = "";
+
+    private async Task HandleSubmit()
+    {
+        if (string.IsNullOrWhiteSpace(Email) || !IsValidEmail(Email))
+        {
+            ErrorMessage = "Please enter a valid email address.";
+            return;
+        }
+
+        if (await IsEmailRegistered(Email))
+        {
+            ErrorMessage = "This email is already registered.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(Password) || Password.Length < 6)
+        {
+            ErrorMessage = "Password must be at least 6 characters long.";
+            return;
+        }
+
+        try
+        {
+            string hashedPassword = HashPassword(Password);
+            var userData = JsonSerializer.Serialize(new { Email, Password = hashedPassword });
+            await JS.InvokeVoidAsync("sessionStorage.setItem", "user", userData);
+            
+            ErrorMessage = "";
+            Navigation.NavigateTo("/login");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "Error saving user data. Please try again.";
+            Console.WriteLine($"Register error: {ex.Message}");
+        }
+    }
+
+    private bool IsValidEmail(string email)
+    {
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private async Task<bool> IsEmailRegistered(string email)
+    {
+        var existingUser = await JS.InvokeAsync<string>("sessionStorage.getItem", "user");
+        return !string.IsNullOrEmpty(existingUser);
+    }
+
+    private string HashPassword(string password)
+    {
+        using (var sha256 = SHA256.Create())
+        {
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return BitConverter.ToString(bytes).Replace("-", "").ToLower();
+        }
+    }
+}

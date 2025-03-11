@@ -1,0 +1,45 @@
+.create-event {
+    max-width: 400px;
+    width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .create-event h2 {
+    text-align: center;
+  }
+  
+  .create-event form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .create-event label {
+    margin-bottom: 5px;
+  }
+  
+  .create-event input,
+  .create-event textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .create-event button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-event button:hover {
+    background-color: #45a049;
+  }

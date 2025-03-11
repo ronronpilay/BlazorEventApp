@@ -1,0 +1,129 @@
+/* App.css */
+.app {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Centered Box Styling for Forms */
+.centered-box {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.centered-box h2 {
+  text-align: center;
+}
+
+.centered-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.centered-box input,
+.centered-box textarea {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.centered-box button {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.centered-box button:hover {
+  background-color: #45a049;
+}
+
+/* Apply Centered Box to Forms */
+.create-event,
+.login,
+.register {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.create-event h2,
+.login h2,
+.register h2 {
+  text-align: center;
+}
+
+.create-event form,
+.login form,
+.register form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-event input,
+.create-event textarea,
+.login input,
+.register input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.create-event button,
+.login button,
+.register button {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-event button:hover,
+.login button:hover,
+.register button:hover {
+  background-color: #45a049;
+}
+
+/* Button Container for Delete, Update, and Add Buttons */
+.event-actions {
+  display: flex;
+  justify-content: space-between; /* Align buttons next to each other */
+  align-items: center; /* Vertically center the buttons */
+}
+
+.event-actions button {
+  margin: 0 5px; /* Optional: Adds some space between buttons */
+  padding: 10px; /* Optional: Adjusts the button size */
+  font-size: 16px; /* Optional: Adjusts the icon size */
+  cursor: pointer;
+}
+
+.event-actions .add-btn {
+  background-color: #28a745; /* Green background for the "+" button */
+  color: white;
+}
+
+.event-actions .add-btn i {
+  font-size: 18px; /* Adjust icon size if needed */
+}

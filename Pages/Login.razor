@@ -1,0 +1,107 @@
+@page "/login"
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using System.Security.Cryptography
+@using System.Text
+
+<div class="login">  
+    <h2>Login</h2>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <p class="error">@ErrorMessage</p>
+    }
+
+    <form @onsubmit="HandleLogin">
+        <label>Email</label>
+        <input type="email" @bind="Email" required />
+
+        <label>Password</label>
+        <input type="password" @bind="Password" required />
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+@code {
+    private string Email { get; set; } = "";
+    private string Password { get; set; } = "";
+    private string ErrorMessage { get; set; } = "";
+
+    private async Task HandleLogin()
+    {
+        try
+        {
+            var storedUserString = await JS.InvokeAsync<string>("sessionStorage.getItem", "user");
+
+            if (string.IsNullOrWhiteSpace(storedUserString))
+            {
+                ErrorMessage = "No account found with this email.";
+                ClearFields();
+                return;
+            }
+
+            User? storedUser = null;
+
+            try
+            {
+                storedUser = System.Text.Json.JsonSerializer.Deserialize<User>(
+                    storedUserString, 
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+            }
+            catch (System.Text.Json.JsonException ex)
+            {
+                Console.WriteLine($"JSON Deserialization Error: {ex.Message}");
+                ErrorMessage = "Error processing login. Please try registering again.";
+                ClearFields();
+                return;
+            }
+
+            if (storedUser == null || storedUser.Email != Email)
+            {
+                ErrorMessage = "No account found with this email.";
+                ClearFields();
+                return;
+            }
+
+            if (storedUser.Password != HashPassword(Password))
+            {
+                ErrorMessage = "Incorrect password. Please try again.";
+                ClearFields();
+                return;
+            }
+
+            Navigation.NavigateTo("/create-event");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "Unexpected error occurred. Please try again.";
+            Console.WriteLine($"Login error: {ex.Message}");
+            ClearFields();
+        }
+    }
+
+    private void ClearFields()
+    {
+        Email = "";
+        Password = "";
+    }
+
+    private string HashPassword(string password)
+    {
+        using (var sha256 = SHA256.Create())
+        {
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return BitConverter.ToString(bytes).Replace("-", "").ToLower();
+        }
+    }
+
+    private class User
+    {
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
+    }
+}
